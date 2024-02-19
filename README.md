@@ -115,7 +115,7 @@ source PPD-RunIISummer20UL18GEN-00020
 ```
 
 
-### Updating the Run-2 UltraLegacy card for Run 3
+### Producing again some of the Run-2 UltraLegacy sample interactively
 
 As next part of our tutorial, we will find the configuration used for the Run 2 ultralegacy sample sample. We can go to the edit details and find out the configuration fragment, as well as the cross section of this sample, which is **6048 pb**.
 
@@ -123,24 +123,88 @@ As next part of our tutorial, we will find the configuration used for the Run 2 
 
 The configuration for this sample has been extracted from MCM and placed in ```CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py```.
 
-We go back to our tutorial's installation in lxplus.
-
+For this part of the tutorial, we will use **lxplus7**.
 ```
-cd $CMSSW_BASE/src/  
+ssh lxplus7
+export SCRAM_ARCH=slc7_amd64_gcc700
+cmsrel CMSSW_10_6_38
+cd CMSSW_10_6_38/src
+cmsenv
 
-nano CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py
+git clone git@github.com:Dominic-Stafford/CMS_Herwig_tutorial_2024.git
+```
 
-cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --step GEN --geometry DB:Extended --era Run2_2018 --no_exec --mc -n 5000
+if git clone doesn't work for you, just cp the folder 
+```
+cp -r /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/CMS_Herwig_tutorial_2024 .
+```
 
+Build cmssw so that it can find the gen fragments:
+```
+scram b -j 4
 
-mkdir test/matchbox
+mkdir -p test/matchbox
 cd test/matchbox
-cp ../../DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py .
+
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --no_exec --mc -n 5000 
 
 # This will speed-up generation for the tutorial 
 # Do not do it, if you make any changes in the configuation
-cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache.tar.bz2
-tar -xjvf Herwig-cache.tar.bz2
+
+cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache.CMSSW_10_6_38.lxplus7.tar.bz2 .
+tar -xjvf Herwig-cache.CMSSW_10_6_38.lxplus7.tar.bz2
+
+
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py 
+```
+
+or alternatively run the cmsRun in the background
+```
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py  >& output.txt &
+disown %1
 
 ```
- 
+
+### Exercise: modify configuration to use dipole shower
+We have to edit the Herwig configuration inside the ```DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py ``` fragment. For this purpose will will clone this configuration into a new file 
+```
+cp $CMSSW_BASE/src/CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py $CMSSW_BASE/src/CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff.py
+
+```
+and edit it inside 
+```
+nano $CMSSW_BASE/src/CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff.py
+````
+
+so that the following lines appear:
+```
+   '# read Matchbox/MCatNLO-DefaultShower.in',
+   'read Matchbox/MCatNLO-DipoleShower.in',   
+
+   '# read Matchbox/FiveFlavourScheme.in',
+   'read snippets/DipoleShowerFiveFlavours.in',   
+```
+In the end, do not forget to run 
+```
+scram b
+```
+so that CMSSW is informed for the new card. You can find an (untested) version of the configuration in MCM [PPD-RunIISummer20UL18GEN-00019](https://cms-pdmv-prod.web.cern.ch/mcm/edit?db_name=requests&prepid=PPD-RunIISummer20UL18GEN-00019&page=0) 
+
+
+```
+mkdir dipole
+cd dipole
+
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --no_exec --mc -n 5000 
+
+# This will speed-up generation for the tutorial 
+# Do not do it, if you make any changes in the configuation
+
+cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache_dipole.CMSSW_10_6_38.lxplus7.tar.bz2 .
+tar -xjvf Herwig-cache_dipole.CMSSW_10_6_38.lxplus7.tar.bz2
+
+
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff_cfg.py  >& output.txt &
+```
+
+Similarly, more cards could be tested modifying accordingly the commands passed inside Herwig through the CMSSW-Herwig-interface. Contact us if you want to get help on a particular processes!
