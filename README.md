@@ -89,3 +89,24 @@ cmsRun DY_LO_MG_Hw_cfg.py
 ```
 
 Try changing these commands to also run the NLO and 2 additional jets examples.
+
+## Herwig in matchbox mode
+
+Matchbox is a mode of Herwig that allows to use external (NLO) ME providers to do the showering and the hadronization, all in one go within Herwig i.e., no need to produce LHE files and pass them for the matching/merging/hadronization to Herwig. 
+
+A first sample with NLO DY->ll exists for Run 2 with UL conditions, consisting of 120 M events and is available in [DAS](https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FDYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7%2F*ext1-v2%2F*). 
+
+Here we will learn how to find ourselves configuration used for it.
+
+We can find the prep-id used for GEN step by going to the **parent** **AOD** in DAS and clicking on the **dbs3show**.
+
+<img src="das.png" alt="DAS" width="800"/>
+
+
+You can browse it in MCM, [PPD-RunIISummer20UL18GEN-00020](https://cms-pdmv-prod.web.cern.ch/mcm/requests?prepid=PPD-RunIISummer20UL18GEN-00020&page=0&shown=127) 
+
+
+
+```
+cd $CMSSW_BASE/src/  # go back to the main src
+```
