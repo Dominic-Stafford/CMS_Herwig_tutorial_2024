@@ -89,3 +89,58 @@ cmsRun DY_LO_MG_Hw_cfg.py
 ```
 
 Try changing these commands to also run the NLO and 2 additional jets examples.
+
+## Herwig in matchbox mode
+
+Matchbox is a mode of Herwig that allows to use external (NLO) ME providers to do the showering and the hadronization, all in one go within Herwig i.e., no need to produce LHE files and pass them for the matching/merging/hadronization to Herwig. 
+
+A first sample with NLO DY->ll exists for Run 2 with UL conditions, consisting of 120 M events and is available in [DAS](https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FDYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7%2F*ext1-v2%2F*). 
+
+Here we will learn how to find ourselves configuration used for it. We can generate, if we wish, few events of this sample without modifying anything using **singularity**.  We can find the prep-id used for GEN step by going to the **parent** **AOD** in DAS and clicking on the **dbs3show**.
+
+<img src="matchbox/figs/das.png" alt="DAS" width="800"/>
+
+The prep-id used for this sample in MCM is the [PPD-RunIISummer20UL18GEN-00020](https://cms-pdmv-prod.web.cern.ch/mcm/requests?prepid=PPD-RunIISummer20UL18GEN-00020&page=0&shown=127). Now we will go to MCM and get the **test command**.
+
+<img src="matchbox/figs/mcm.png" alt="MCM" width="800"/>
+
+Generating some events interactively will need ~20 minutes of time. It is better that we login again to lxplus into a new session and do this in our tmp folder. We will let it run in a separate terminal during the tutorial session and look back at it in the end.
+
+```
+cd /tmp/$USER
+
+wget https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_test/PPD-RunIISummer20UL18GEN-00020
+
+source PPD-RunIISummer20UL18GEN-00020
+```
+
+
+### Updating the Run-2 UltraLegacy card for Run 3
+
+As next part of our tutorial, we will find the configuration used for the Run 2 ultralegacy sample sample. We can go to the edit details and find out the configuration fragment, as well as the cross section of this sample, which is **6048 pb**.
+
+<img src="matchbox/figs/mcm_edit.png" alt="MCM edit details" width="800"/>
+
+The configuration for this sample has been extracted from MCM and placed in ```CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py```.
+
+We go back to our tutorial's installation in lxplus.
+
+```
+cd $CMSSW_BASE/src/  
+
+nano CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py
+
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py --eventcontent RAWSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --step GEN --geometry DB:Extended --era Run2_2018 --no_exec --mc -n 5000
+
+
+mkdir test/matchbox
+cd test/matchbox
+cp ../../DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py .
+
+# This will speed-up generation for the tutorial 
+# Do not do it, if you make any changes in the configuation
+cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache.tar.bz2
+tar -xjvf Herwig-cache.tar.bz2
+
+```
+ 
