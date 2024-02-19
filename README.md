@@ -100,7 +100,7 @@ Here we will learn how to find ourselves configuration used for it.
 
 We can find the prep-id used for GEN step by going to the **parent** **AOD** in DAS and clicking on the **dbs3show**.
 
-<img src="das.png" alt="DAS" width="800"/>
+<img src="matchbox/figs/das.png" alt="DAS" width="800"/>
 
 
 You can browse it in MCM, [PPD-RunIISummer20UL18GEN-00020](https://cms-pdmv-prod.web.cern.ch/mcm/requests?prepid=PPD-RunIISummer20UL18GEN-00020&page=0&shown=127) 
