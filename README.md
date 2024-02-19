@@ -96,17 +96,34 @@ Matchbox is a mode of Herwig that allows to use external (NLO) ME providers to d
 
 A first sample with NLO DY->ll exists for Run 2 with UL conditions, consisting of 120 M events and is available in [DAS](https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FDYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7%2F*ext1-v2%2F*). 
 
-Here we will learn how to find ourselves configuration used for it.
-
-We can find the prep-id used for GEN step by going to the **parent** **AOD** in DAS and clicking on the **dbs3show**.
+Here we will learn how to find ourselves configuration used for it. We can generate, if we wish, few events of this sample without modifying anything using **singularity**.  We can find the prep-id used for GEN step by going to the **parent** **AOD** in DAS and clicking on the **dbs3show**.
 
 <img src="matchbox/figs/das.png" alt="DAS" width="800"/>
 
+The prep-id used for this sample in MCM is the [PPD-RunIISummer20UL18GEN-00020](https://cms-pdmv-prod.web.cern.ch/mcm/requests?prepid=PPD-RunIISummer20UL18GEN-00020&page=0&shown=127). Now we will go to MCM and get the **test command**.
 
-You can browse it in MCM, [PPD-RunIISummer20UL18GEN-00020](https://cms-pdmv-prod.web.cern.ch/mcm/requests?prepid=PPD-RunIISummer20UL18GEN-00020&page=0&shown=127) 
+<img src="matchbox/figs/mcm.png" alt="MCM" width="800"/>
+
+Generating some events interactively will need ~20 minutes of time. It is better that we login again to lxplus into a new session and do this in our tmp folder. We will let it run in a separate terminal during the tutorial session and look back at it in the end.
+
+```
+cd /tmp/$USER
+
+wget https://cms-pdmv-prod.web.cern.ch/mcm/public/restapi/requests/get_test/PPD-RunIISummer20UL18GEN-00020
+
+source PPD-RunIISummer20UL18GEN-00020
+```
+
+
+### Updating the Run-2 UltraLegacy card for Run 3
+
+As next part of our tutorial, we will find the configuration used for the Run 2 ultralegacy sample sample.
+
 
 
 
 ```
-cd $CMSSW_BASE/src/  # go back to the main src
+cd $CMSSW_BASE/src/  
+nano CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py
 ```
+ 
