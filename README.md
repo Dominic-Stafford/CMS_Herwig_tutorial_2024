@@ -207,4 +207,4 @@ tar -xjvf Herwig-cache_dipole.CMSSW_10_6_38.lxplus7.tar.bz2
 cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff_cfg.py  >& output.txt &
 ```
 
-Similarly, more cards could be tested modifying accordingly the commands passed inside Herwig through the CMSSW-Herwig-interface. Contact us if you want to get help on a particular processes!
+Similarly, more cards could be tested modifying accordingly the commands passed inside Herwig through the CMSSW-Herwig-interface. Contact us if you want to get help on any particular process!
