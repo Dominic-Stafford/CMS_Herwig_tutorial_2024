@@ -117,13 +117,24 @@ source PPD-RunIISummer20UL18GEN-00020
 
 ### Updating the Run-2 UltraLegacy card for Run 3
 
-As next part of our tutorial, we will find the configuration used for the Run 2 ultralegacy sample sample.
+As next part of our tutorial, we will find the configuration used for the Run 2 ultralegacy sample sample. We can go to the edit details and find out the configuration fragment, as well as the cross section of this sample, which is **6048 pb**.
 
+<img src="matchbox/figs/mcm_edit.png" alt="MCM edit details" width="800"/>
 
+The configuration for this sample has been extracted from MCM and placed in ```CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py```.
 
+We go back to our tutorial's installation in lxplus.
 
 ```
 cd $CMSSW_BASE/src/  
+
 nano CMS_Herwig_tutorial_2024/matchbox/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py
+
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py --eventcontent RAWSIM,NANOAODGEN --datatier GEN,NANOAOD --fileout file:standalone_DY.root --conditions 106X_upgrade2018_realistic_v4 --beamspot Realistic25ns13TeVEarly2018Collision --step GEN,NANOGEN --geometry DB:Extended --era Run2_2018 --no_exec --mc --customise_commands process.MessageLogger.cerr.FwkReport.reportEvery="int(1000)" -n 5000
+
+mkdir test/matchbox
+cd test/matchbox
+cp ../../DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py .
+
 ```
  
