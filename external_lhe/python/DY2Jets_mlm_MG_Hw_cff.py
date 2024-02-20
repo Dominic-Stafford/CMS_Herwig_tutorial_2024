@@ -7,7 +7,7 @@ from Configuration.Generator.Herwig7Settings.Herwig7CommonMergingSettings_cfi im
 
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/eos/user/d/dstaffor/CMS_Herwig_tutorial_24_gridpacks/DYJetsToLL_M-50_13TeV-madgraphMLM-herwig7_slc7_amd64_gcc820_CMSSW_9_3_16_tarball.tar.xz'),
+    args = cms.vstring('/afs/cern.ch/user/d/dstaffor/public/CMS_Herwig_tutorial_24_gridpacks/DYJetsToLL_M-50_13TeV-madgraphMLM-herwig7_slc7_amd64_gcc820_CMSSW_9_3_16_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),

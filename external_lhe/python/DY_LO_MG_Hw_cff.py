@@ -9,7 +9,7 @@ from Configuration.Generator.Herwig7Settings.Herwig7LHEMG5aMCatNLOSettings_cfi i
 
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/eos/user/d/dstaffor/CMS_Herwig_tutorial_24_gridpacks/DY_LO_inclusive_slc7_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    args = cms.vstring('/afs/cern.ch/user/d/dstaffor/public/CMS_Herwig_tutorial_24_gridpacks/DY_LO_inclusive_slc7_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
