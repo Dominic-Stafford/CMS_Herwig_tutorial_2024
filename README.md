@@ -208,3 +208,44 @@ cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cfg.py  >& output.tx
 ```
 
 Similarly, more cards could be tested modifying accordingly the commands passed inside Herwig through the CMSSW-Herwig-interface. Contact us if you want to get help on any particular process!
+
+### Exercise: Solutions
+In the end of the exercise you should have four ROOT files two in NANAOD format.
+
+```
+DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_inNANOAODGEN.root
+DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_inNANOAODGEN.root
+```
+
+Comparing their output should be simple with any ROOT or python analyzer. A simple ROOT script which runs over premade ROOT files from the exercise discussed is the following:
+
+```
+ssh -X username@lxplus9.cern.ch # or ssh -Y if you are from mac
+root
+
+```
+
+Copy and paste the following lines in your ROOT console:
+
+```
+TFile *fp1 = new TFile("/afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024_files/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_inNANOAODGEN.root");
+TFile *fp2 = new TFile("/afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024_files/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_inNANOAODGEN.root");
+
+TTree *t1 = (TTree*) fp1->Get("Events");
+TTree *t2 = (TTree*) fp2->Get("Events");
+
+
+t2->SetLineColor(kRed)
+t2->SetLineStyle(2)
+
+t1->Draw("GenDressedLepton_pt>>h1(35,0,70)")
+t2->Draw("GenDressedLepton_pt>>h2(25,0,70)","","same")
+```
+
+The script should produce this output:
+
+<img src="matchbox/figs/lepton_pt.png" alt="lepton_pt" width="400"/>
+
+Try generating more statistics and checking more variables like dilepton mass, Pt, Y.
+
+
