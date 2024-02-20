@@ -146,7 +146,7 @@ scram b -j 4
 mkdir -p test/matchbox
 cd test/matchbox
 
-cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --no_exec --mc -n 5000 
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --customise_commands process.MessageLogger.cerr.FwkReport.reportEvery="int(1000)" --no_exec --mc -n 5000 
 
 # This will speed-up generation for the tutorial 
 # Do not do it, if you make any changes in the configuation
@@ -155,12 +155,12 @@ cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache.CMSS
 tar -xjvf Herwig-cache.CMSSW_10_6_38.lxplus7.tar.bz2
 
 
-cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py 
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py 
 ```
 
 or alternatively run the cmsRun in the background
 ```
-cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cff_cfg.py  >& output.txt &
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_cfg.py  >& output.txt &
 disown %1
 
 ```
@@ -195,7 +195,7 @@ so that CMSSW is informed for the new card. You can find an (untested) version o
 mkdir dipole
 cd dipole
 
-cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --no_exec --mc -n 5000 
+cmsDriver.py CMS_Herwig_tutorial_2024/matchbox/python/DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff.py --python_filename DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cfg.py --eventcontent RAWSIM,NANOAODGEN --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,NANOAOD --fileout file:DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole.root --conditions auto:mc --step GEN,NANOGEN --geometry DB:Extended --customise_commands process.MessageLogger.cerr.FwkReport.reportEvery="int(1000)" --no_exec --mc -n 5000 
 
 # This will speed-up generation for the tutorial 
 # Do not do it, if you make any changes in the configuation
@@ -204,7 +204,7 @@ cp /afs/cern.ch/user/t/theofil/public/CMS_Herwig_tutorial_2024/Herwig-cache_dipo
 tar -xjvf Herwig-cache_dipole.CMSSW_10_6_38.lxplus7.tar.bz2
 
 
-cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cff_cfg.py  >& output.txt &
+cmsRun DYToLL_NLO_5FS_TuneCH3_13TeV_matchbox_herwig7_dipole_cfg.py  >& output.txt &
 ```
 
 Similarly, more cards could be tested modifying accordingly the commands passed inside Herwig through the CMSSW-Herwig-interface. Contact us if you want to get help on any particular process!

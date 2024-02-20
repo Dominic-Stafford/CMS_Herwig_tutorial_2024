@@ -31,7 +31,6 @@ generator = cms.EDFilter("Herwig7GeneratorFilter",
 from GeneratorInterface.RivetInterface.rivetAnalyzer_cfi import rivetAnalyzer
 
 rivetAnalyzer.AnalysisNames = cms.vstring(
-    "CMS_2018_I1667854",
     "MC_ZINC",
     "MC_ZJETS",
     "MC_XS",
